@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: lessflow
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client.ExchangeFunctions: debug
+
+news:
+  key: ${NEWS_KEY}
+shotstack:
+  key: ${SHOTSTACK_KEY}
