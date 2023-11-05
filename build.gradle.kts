@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("org.springframework.boot") version PluginVersions.SPRING_BOOT_VERSION
     id("io.spring.dependency-management") version PluginVersions.DEPENDENCY_MANAGER_VERSION
@@ -7,10 +9,7 @@ plugins {
 
 group = "com.dgswcns"
 version = "0.0.1-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -19,6 +18,7 @@ repositories {
 
 dependencies {
     implementation(Dependencies.KOTLIN_REFLECT)
+    implementation(Dependencies.KOTLIN_STDLIB)
     implementation(Dependencies.JACKSON)
 
     implementation(Dependencies.SPRING_WEBFLUX)
@@ -31,8 +31,6 @@ dependencies {
     implementation(Dependencies.MONGODB_REACTIVE)
     implementation(Dependencies.SPRING_MONGODB)
 
-    //implementation(Dependencies.SPRING_SECURITY)
-
     implementation(Dependencies.JWT)
 
     implementation(Dependencies.SPRING_TEST)
@@ -44,4 +42,15 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
+    }
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = false
 }
