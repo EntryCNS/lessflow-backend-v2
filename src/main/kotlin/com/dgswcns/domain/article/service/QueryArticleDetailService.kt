@@ -1,5 +1,6 @@
 package com.dgswcns.domain.article.service
 
+import com.dgswcns.domain.article.exception.ArticleExceptions
 import com.dgswcns.domain.article.handler.dto.response.ArticleBodyResponse
 import com.dgswcns.domain.article.handler.dto.response.ArticleResponse
 import com.dgswcns.domain.article.persistence.dao.ArticleRepository
@@ -12,7 +13,7 @@ class QueryArticleDetailService(
     suspend fun getArticleById(
         id: String
     ): ArticleResponse {
-        val article = articleRepository.findById(id) ?: throw RuntimeException()
+        val article = articleRepository.findById(id) ?: throw ArticleExceptions.NotFoundArticle()
         return ArticleResponse(
             article.keyword,
             ArticleBodyResponse(

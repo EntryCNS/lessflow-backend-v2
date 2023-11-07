@@ -2,6 +2,7 @@ package com.dgswcns.thirdparty.news
 
 import com.dgswcns.domain.article.handler.dto.response.ArticleBodyResponse
 import com.dgswcns.domain.article.handler.dto.response.ArticleResponse
+import com.dgswcns.thirdparty.news.exception.NewsExceptions
 import com.dgswcns.thirdparty.news.webclient.NewsClient
 import org.springframework.stereotype.Service
 
@@ -11,7 +12,10 @@ class SearchNewsService(
 ) {
     suspend fun searchNewsByKeyword(keyword: String): ArticleResponse {
         val results = newsClient.searchNewsByQ(keyword).results
-        require(results.isNotEmpty()) { throw RuntimeException() }
+
+        if (results.isEmpty()) {
+            throw NewsExceptions.NewsNotFoundException()
+        }
 
         return ArticleResponse(
             keyword,

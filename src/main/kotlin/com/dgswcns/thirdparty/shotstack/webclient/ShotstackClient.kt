@@ -1,5 +1,6 @@
 package com.dgswcns.thirdparty.shotstack.webclient
 
+import com.dgswcns.global.error.GlobalExceptions
 import com.dgswcns.thirdparty.shotstack.properties.ShotstackProperties
 import com.dgswcns.thirdparty.shotstack.webclient.dto.request.RenderVideoRequest
 import com.dgswcns.thirdparty.shotstack.webclient.dto.response.RenderVideoResponse
@@ -147,7 +148,7 @@ class ShotstackClient(
             .bodyValue(request)
             .retrieve()
             .onStatus({ status -> status.isError }) {
-                throw RuntimeException()
+                throw GlobalExceptions.InternalServerError()
             }
             .awaitBody()
     }
