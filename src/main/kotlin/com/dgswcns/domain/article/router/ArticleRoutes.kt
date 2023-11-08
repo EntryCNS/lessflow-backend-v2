@@ -10,10 +10,10 @@ class ArticleRoutes {
     @Bean
     fun articleRouter(articleHandler: ArticleHandler) = coRouter {
         "/article".nest {
-            POST("/") {articleHandler.create(it)}
+            POST("/create") {articleHandler.create(it)}
+            GET("/list") {articleHandler.getArticles(it)}
             GET("/{id}") {articleHandler.getArticleById(it)}
             GET("/video/{id}") {articleHandler.getArticleVideoById(it)}
-            GET("/") {articleHandler.getArticles(it)}
         }
     }
 }

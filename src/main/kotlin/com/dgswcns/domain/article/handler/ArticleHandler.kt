@@ -1,10 +1,8 @@
 package com.dgswcns.domain.article.handler
 
 import com.dgswcns.domain.article.handler.dto.request.CreateArticleRequest
-import com.dgswcns.domain.article.service.CreateArticleService
-import com.dgswcns.domain.article.service.QueryArticleListService
-import com.dgswcns.domain.article.service.QueryArticleDetailService
-import com.dgswcns.domain.article.service.QueryArticleVideoService
+import com.dgswcns.domain.article.service.*
+import com.dgswcns.global.error.GlobalExceptions
 import com.dgswcns.global.extensions.extractBody
 import com.dgswcns.global.extensions.extractPath
 import kotlinx.coroutines.reactor.awaitSingle
@@ -20,7 +18,7 @@ class ArticleHandler(
     private val queryArticleVideoService: QueryArticleVideoService
 ) {
     suspend fun create(request: ServerRequest): ServerResponse {
-        createArticleService.create(request.extractBody<CreateArticleRequest>().awaitSingle())
+        createArticleService.createByKeyword(request.extractBody<CreateArticleRequest>().awaitSingle())
         return ServerResponse.status(HttpStatus.CREATED).json().buildAndAwait()
     }
 
@@ -40,11 +38,16 @@ class ArticleHandler(
             .status(HttpStatus.OK)
             .json()
             .bodyValueAndAwait(
-                queryArticleVideoService.execute(request.pathVariable("id"))
+                queryArticleVideoService.execute(request.extractPath("id"))
             )
     }
 
     suspend fun getArticles(request: ServerRequest): ServerResponse {
-        return ServerResponse.status(HttpStatus.OK).bodyValueAndAwait(queryArticleListService.execute())
+        val page = request.queryParamOrNull("page") ?: throw GlobalExceptions.BadRequestError()
+        val date = request.queryParamOrNull("date")
+        return ServerResponse
+            .status(HttpStatus.OK)
+            .json()
+            .bodyValueAndAwait(queryArticleListService.execute(page, date))
     }
 }
