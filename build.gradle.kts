@@ -31,13 +31,11 @@ dependencies {
     implementation(Dependencies.MONGODB_REACTIVE)
     implementation(Dependencies.SPRING_MONGODB)
 
-    implementation(Dependencies.JWT)
-
     implementation(Dependencies.SPRING_TEST)
 
-    implementation(Dependencies.JSOUP)
-
     implementation(Dependencies.KOMORAN)
+
+    implementation(Dependencies.TOMCAT_UTIL)
 }
 
 tasks.withType<Test> {

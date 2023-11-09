@@ -21,18 +21,12 @@ object Dependencies{
     const val SPRING_MONGODB = "org.springframework.data:spring-data-mongodb"
     const val MONGODB_REACTIVE = "org.mongodb:mongodb-driver-reactivestreams"
 
-    // security
-    //const val SPRING_SECURITY = "org.springframework.boot:spring-boot-starter-security"
-
-    // jwt
-    const val JWT = "io.jsonwebtoken:jjwt:${DependencyVersions.JWT_VERSION}"
-
     // test
     const val SPRING_TEST = "org.springframework.boot:spring-boot-starter-test:${PluginVersions.SPRING_BOOT_VERSION}"
 
-    // jsoup
-    const val JSOUP = "org.jsoup:jsoup:${DependencyVersions.JSOUP}"
-
     //KOMORAN
     const val KOMORAN = "com.github.shin285:KOMORAN:3.3.4"
+
+    // tomcat-util
+    const val TOMCAT_UTIL = "org.apache.tomcat:tomcat-util:${DependencyVersions.TOMCAT_UTIL_VERSION}"
 }
