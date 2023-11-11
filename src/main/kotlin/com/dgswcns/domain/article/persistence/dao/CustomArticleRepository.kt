@@ -4,6 +4,7 @@ import com.dgswcns.domain.article.persistence.entity.Article
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
@@ -19,9 +20,8 @@ class CustomArticleRepository(
         page: String,
         date: String?
     ): Page<Article>  {
-
         val pageable: Pageable =
-            PageRequest.of(Integer.parseInt(page) -1, 5)
+            PageRequest.of(Integer.parseInt(page) -1, 5, Sort.by(Sort.Direction.DESC, "createAt"))
 
         val query = Query()
 
@@ -41,7 +41,6 @@ class CustomArticleRepository(
                 "article"
             ).collectList().toFuture().get()
 
-        //val a = filteredMetaData.collectList().toFuture().get()
         return PageableExecutionUtils.getPage(
             filteredMetaData!!,
             pageable,
