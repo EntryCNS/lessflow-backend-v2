@@ -76,7 +76,8 @@ class NlpUtil {
 
         for(i in text.indices) {
             val c = text[i]
-            if(!quoteState && c == '.') { // 인용문이 아닌 곳에 문장 분리자가 온다면 분리
+            // 인용문이 아닌 곳, 문장 분리자가 소수점이 아닐때 문장 분리자가 온다면 분리
+            if(!quoteState && c == '.' && (i == 0 || !text[i-1].isDigit()) && (i == text.lastIndex || !text[i+1].isDigit())) {
                 val splittedString = text.slice(lastIndex until i)
                 list.add(splittedString)
                 lastIndex = i + 1
